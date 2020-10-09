@@ -1,7 +1,9 @@
 import UsersAPI from './users';
+import EventsAPI from './events';
 
 const api = {
-  users: new UsersAPI()
+  users: new UsersAPI(),
+  events: new EventsAPI()
 };
 
 Object.freeze(api);
