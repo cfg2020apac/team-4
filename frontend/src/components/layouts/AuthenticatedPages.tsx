@@ -8,6 +8,8 @@ import UpdateUser from 'src/modules/session/components/UpdateUserPage';
 import Event from 'src/modules/events/components/EventDetails';
 import AppMainLayout from './AppMainLayout';
 import ErrorBoundary from './ErrorBoundary';
+import Profile from 'src/modules/profile/components/Profile';
+import Shop from 'src/modules/game/components/Shop';
 
 type Props = RouteComponentProps;
 
@@ -20,7 +22,10 @@ const AuthenticatedPages: React.FC<Props> = (props) => {
   const homeIndexRoute = <Route exact path='/' component={HomeIndex} />;
   const updateUserRoute = <Route exact path='/user' component={UpdateUser} />;
   const createEventRoute = <Route exact path='/events/new' component={Event} />;
+  const createProfileRoute = <Route exact path='/profile' component={Profile} />;
+  const createShopRoute = <Route exact path='/shop' component={Shop} />;
   const catchAllRoute = <Route path='/' render={() => <div>404 Page Not Found</div>} />;
+
 
   return (
     <AppMainLayout>
@@ -29,6 +34,8 @@ const AuthenticatedPages: React.FC<Props> = (props) => {
           {homeIndexRoute}
           {updateUserRoute}
           {createEventRoute}
+          {createProfileRoute}
+          {createShopRoute}
           {catchAllRoute}
         </Switch>
       </ErrorBoundary>

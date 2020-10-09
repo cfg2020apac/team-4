@@ -141,7 +141,8 @@ const Sidebar: React.FC<Props> = (props) => {
 
       <List component='div' disablePadding>
         <SideButton url='/' text='Home' icon={<Home />} />
-        <SideButton url='/user' text='Update Profile' icon={<User />} />
+        {/* <SideButton url='/user' text='Update Profile' icon={<User />} /> */}
+        <SideButton url='/profile' text='View Profile' icon={<User />} />
         <SideButton url='/events/new' text='Create Event' icon={<ListIcon />} />
         <Divider />
         <ListItem

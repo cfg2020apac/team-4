@@ -2,10 +2,18 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Box, Card, Grid, TextField, makeStyles } from '@material-ui/core';
+import { Box, Card, Grid, TextField, makeStyles, InputLabel, Button } from '@material-ui/core';
 
 import { BACKEND_URL } from 'src/constants';
 import * as session from 'src/modules/session';
+
+import UserProfile from 'react-user-profile';
+
+import { Drawer, useMediaQuery, useTheme } from '@material-ui/core';
+import clsx from 'clsx';
+
+import Sidebar from '../../../components/layouts/Sidebar';
+import Topbar from '../../../components/layouts/Topbar';
 
 type Props = RouteComponentProps;
 
@@ -14,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: `40px 40px 40px 40px`
+    padding: `40px 40px 40px 40px`,
+    fontFamily: 'space mono'
   },
   buttons: {
     height: '100%',
@@ -28,34 +37,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const HomeIndex: React.FC<Props> = () => {
+const Shop: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const user = useSelector(session.selectors.getCurrentUser);
   const classes = useStyles();
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(!isMobile);
+  const shiftTopbar = isDrawerOpen && !isMobile;
+  const shiftContent = isDrawerOpen && !isMobile;
+
   return (
-    <Card className={classes.root}>
-      {/* <Grid container spacing={0}>
-        <Grid item xs={5}>
-          <TextField
-            id='username'
-            label='Username'
-            defaultValue={user ? user.name : 'user undefined'}
-            InputProps={{
-              readOnly: true
-            }}
-          />
-        </Grid>
-      </Grid> */}
-      <img
-          src={require('../../../assets/img/Application_List.PNG')}
+    <>
+      <Card className={classes.root}>
+        <img
+          src={require('../../../assets/img/shop2.PNG')}
           style={{
             height: '600px',
             width: '300px'
           }}
         />
-    </Card>
+        
+      </Card>
+    </>
   );
 };
 
-export default withRouter(HomeIndex);
+export default withRouter(Shop);
