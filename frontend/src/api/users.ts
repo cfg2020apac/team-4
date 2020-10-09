@@ -26,7 +26,7 @@ class UsersAPI extends BaseAPI {
   }
 
   public signIn(username: string, password: string): ApiPromise<SessionData> {
-    return this.extractCsrfToken(this.post('/signin', { username, password }));
+    return this.extractCsrfToken(this.post('/login', { username, password }));
   }
 
   public signOut(): ApiPromise<{}> {
@@ -35,6 +35,8 @@ class UsersAPI extends BaseAPI {
 
   private extractCsrfToken<D extends WithToken>(promise: ApiPromise<D>): ApiPromise<D> {
     return promise.then((response) => {
+      console.log(response);
+
       if (response.data.csrf_token) {
         this.setCsrfToken(response.data.csrf_token);
       }
