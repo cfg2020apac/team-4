@@ -163,6 +163,7 @@ def announcements(current_user):
     status_code = 200
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
 
+index = 1
 @app.route('/api/new-event', methods=['POST'])
 @authentication_required
 def resources(current_user):
@@ -170,20 +171,22 @@ def resources(current_user):
     Input: form data for new event
     Output: NIL
     """
+    global index
     uploaded_file = request.files['file']
     name = request.form.get('name')
     location = request.form.get('location')
     date = request.form.get('date')
     descriptions = request.form.get('descriptions')
     sql = f"INSERT INTO events(event_title, location, date, descriptions, url) VALUES(%s,%s,%s,%s,%s);"
-    g.cursor.execute(sql, [name, location, date, descriptions, "localhost:5000/get-event-banner/" + uploaded_file.filename])
+    g.cursor.execute(sql, [name, location, date, descriptions, "localhost:5000/get-event-banner/" + str(index) + "_" + uploaded_file.filename])
     if uploaded_file.filename != '':
-            uploaded_file.save("./s3/" + uploaded_file.filename)
+            uploaded_file.save("./s3/events/" + str(index)+ "_" +uploaded_file.filename)
     response = {
         'data': "sucess",
         'error': None
     }
     status_code = 200
+    index += 1
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
 
 
@@ -194,7 +197,7 @@ def get_event_banner(current_user, path):
     Input: NIL
     Output: url of pic from s3
     """
-    return send_from_directory('s3', path)
+    return send_from_directory('s3/events', path)
 
 @app.route('/api/events', methods=['GET'])
 @authentication_required
