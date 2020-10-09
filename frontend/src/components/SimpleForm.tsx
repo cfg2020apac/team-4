@@ -1,7 +1,7 @@
 import { Formik, FormikProps, FieldArray, Field } from 'formik';
 import * as React from 'react';
 import { ObjectSchema } from 'yup';
-import { Card, Grid, IconButton, MenuItem, TextField, Tooltip, Divider } from '@material-ui/core';
+import { Card, Grid, IconButton, MenuItem, TextField, Tooltip, Divider, Checkbox, Radio } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CancelIcon from '@material-ui/icons/Cancel';
 import ResetIcon from '@material-ui/icons/SettingsBackupRestoreRounded';
@@ -173,13 +173,15 @@ const SimpleForm: React.FC<Props<any>> = ({ initialValues, formMetadata, validat
                                 required={fields.required}
                               >
                                 {!fields.options
-                                  ? null
+                                  ? 
+                                  null
                                   : fields.options.map((option: any) => (
                                       <MenuItem key={option.value} value={option.value}>
                                         {option.label}
                                       </MenuItem>
                                     ))}
                               </TextField>
+                              // <Field type="checkbox" name="toggle"></Field>
                             )}
                           </Grid>
                         );
@@ -187,39 +189,45 @@ const SimpleForm: React.FC<Props<any>> = ({ initialValues, formMetadata, validat
                     </Grid>
                     <br />
                     <br />
-                    <Grid>
+                    {/* <Grid>
                       <FileUploader fieldname='file' fieldnameHelper='file_helper' />
-                    </Grid>
+                    </Grid> */}
                   </Grid>
-                  {/* Form buttons */}
-                  <Grid item xs={1}>
+                </Grid>
+                {/* Form buttons */}
+                <Grid container spacing={5} justify='center'>
+                  <Grid item xs={1} spacing={3}>
                     <div className={classes.buttons}>
                       <Tooltip title='Cancel'>
                         <IconButton onClick={onCancel} size='medium'>
                           <CancelIcon color='error' />
                         </IconButton>
                       </Tooltip>
+                    </div>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <div className={classes.buttons}>
                       <Tooltip title='Save'>
-                        <div>
-                          <IconButton type='submit' disabled={!isValid || isSubmitting} size='medium' color='primary'>
-                            <TickIcon />
-                          </IconButton>
-                        </div>
-                      </Tooltip>
-                      <Tooltip title='Reset'>
-                        <div>
-                          <IconButton
-                            type='button'
-                            onClick={handleReset}
-                            disabled={!dirty || isSubmitting}
-                            size='medium'
-                            color='primary'
-                          >
-                            <ResetIcon />
-                          </IconButton>
-                        </div>
+                        <IconButton type='submit' disabled={!isValid || isSubmitting} size='medium' color='primary'>
+                          <TickIcon />
+                        </IconButton>
                       </Tooltip>
                     </div>
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Tooltip title='Reset'>
+                      <div className={classes.buttons}>
+                        <IconButton
+                          type='button'
+                          onClick={handleReset}
+                          disabled={!dirty || isSubmitting}
+                          size='medium'
+                          color='primary'
+                        >
+                          <ResetIcon />
+                        </IconButton>
+                      </div>
+                    </Tooltip>
                   </Grid>
                 </Grid>
               </form>
