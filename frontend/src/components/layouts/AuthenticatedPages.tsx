@@ -5,6 +5,7 @@ import { Redirect, Route, RouteComponentProps, Switch, withRouter } from 'react-
 import HomeIndex from 'src/modules/home/components/HomeIndex';
 import * as session from 'src/modules/session';
 import UpdateUser from 'src/modules/session/components/UpdateUserPage';
+import Event from 'src/modules/events/components/EventDetails';
 import AppMainLayout from './AppMainLayout';
 import ErrorBoundary from './ErrorBoundary';
 
@@ -18,6 +19,7 @@ const AuthenticatedPages: React.FC<Props> = (props) => {
 
   const homeIndexRoute = <Route exact path='/' component={HomeIndex} />;
   const updateUserRoute = <Route exact path='/user' component={UpdateUser} />;
+  const createEventRoute = <Route exact path='/events/new' component={Event} />;
   const catchAllRoute = <Route path='/' render={() => <div>404 Page Not Found</div>} />;
 
   return (
@@ -26,6 +28,7 @@ const AuthenticatedPages: React.FC<Props> = (props) => {
         <Switch>
           {homeIndexRoute}
           {updateUserRoute}
+          {createEventRoute}
           {catchAllRoute}
         </Switch>
       </ErrorBoundary>
