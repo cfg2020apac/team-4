@@ -73,3 +73,17 @@ INSERT INTO user VALUES
 (2,"person2@yahoo.com.sg","test2","Person 2","1991-05-04","Female","Malay","12 Bukit View",1,3,4,"self-employed",80),
 (3,"person3@yahoo.com.sg","test3","Person 3","1984-09-11","Male","Indian","12 Everest Street",4,4,2,"retired",20),
 (4,"person4@yahoo.com.sg","test4","Person 4","1981-09-12","Female","Chinese","12 Crown Street",1,2,5,"unemployed",30);
+
+CREATE TABLE leaderboard(
+    user_id int NOT NULL, 
+    user_score int NOT NULL
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES user(id)
+);
+
+INSERT INTO leaderboard VALUES 
+(1,110),
+(2,160),
+(3,40),
+(4,60);
