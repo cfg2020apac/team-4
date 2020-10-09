@@ -1,6 +1,7 @@
 export interface EventDetails {
   name: string;
-  date: Date;
+  /** yyyy-MM-DD */
+  date: string;
   address: string;
   bannerImage: string;
   descriptions: string;
