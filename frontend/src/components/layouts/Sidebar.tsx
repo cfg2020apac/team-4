@@ -1,6 +1,7 @@
 import { Divider, List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Home from '@material-ui/icons/Home';
+import ListIcon from '@material-ui/icons/List';
 import Logout from '@material-ui/icons/ExitToApp';
 import User from '@material-ui/icons/SupervisedUserCircle';
 import clsx from 'clsx';
@@ -141,6 +142,7 @@ const Sidebar: React.FC<Props> = (props) => {
       <List component='div' disablePadding>
         <SideButton url='/' text='Home' icon={<Home />} />
         <SideButton url='/user' text='Update Profile' icon={<User />} />
+        <SideButton url='/events/new' text='Create Event' icon={<ListIcon />} />
         <Divider />
         <ListItem
           className={classes.listItem}
