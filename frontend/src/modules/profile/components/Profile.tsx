@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter,Link } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { Box, Card, Grid, TextField, makeStyles, InputLabel, Button } from '@material-ui/core';
 
 import { BACKEND_URL } from 'src/constants';
@@ -55,7 +55,7 @@ const Profile: React.FC<Props> = () => {
     <>
       <Card className={classes.root}>
         <img
-          src={require('../../../assets/img/pet_avatar.PNG')}
+          src={require('../../../assets/img/pet_avatar.png')}
           style={{
             borderRadius: '50%',
             height: '150px',
@@ -69,31 +69,33 @@ const Profile: React.FC<Props> = () => {
             location={location}
           />
         </div> */}
-        <br></br>
-        <div><b>JPMorggy</b></div>
-        <br></br>
+        <br />
+        <div>
+          <b>JPMorggy</b>
+        </div>
+        <br />
         <div>Points: 2300</div>
-        <br></br>
+        <br />
         <div>Current Ranking: 1</div>
-        <br></br>
+        <br />
         <div>Location: Beauty World</div>
       </Card>
-      <br></br>
+      <br />
       <Card className={classes.root}>
         <img
-          src={require('../../../assets/img/pet.PNG')}
+          src={require('../../../assets/img/pet.png')}
           style={{
             height: '500px',
             width: '300px'
           }}
         />
-        <Link to="/shop">
-        <Button variant='contained' color='primary' >
-          Pet Shop
-        </Button>
+        <Link to='/shop'>
+          <Button variant='contained' color='primary'>
+            Pet Shop
+          </Button>
         </Link>
       </Card>
-      <br></br>
+      <br />
       <Card className={classes.root}>
         <img
           src={require('../../../assets/img/leaderboard.png')}

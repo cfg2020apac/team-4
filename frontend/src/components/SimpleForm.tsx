@@ -173,8 +173,7 @@ const SimpleForm: React.FC<Props<any>> = ({ initialValues, formMetadata, validat
                                 required={fields.required}
                               >
                                 {!fields.options
-                                  ? 
-                                  null
+                                  ? null
                                   : fields.options.map((option: any) => (
                                       <MenuItem key={option.value} value={option.value}>
                                         {option.label}

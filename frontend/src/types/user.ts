@@ -8,7 +8,7 @@ export interface UserData {
   date_of_birth: string | null;
   gender: string | null;
   race: string | null;
-  nationality:string | null;
+  nationality: string | null;
   address_streetname: string | null;
   address_postal_code: string | null;
   address_unit_number: string | null;
