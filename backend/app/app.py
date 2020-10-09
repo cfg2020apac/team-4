@@ -144,7 +144,6 @@ def announcements(current_user):
     Input: NIL
     Output: list of annoucements
     """
-    response = {}
     sql = f"SELECT title , content from announcement;"
     g.cursor.execute(sql)
     data = g.cursor.fetchall()
@@ -199,6 +198,74 @@ def get_event_banner(current_user, path):
     """
     return send_from_directory('s3/events', path)
 
+
+
+@app.route('/api/event/<event>', methods=['GET'])
+@authentication_required
+def event(current_user, event):
+    """
+    Input: NIL
+    Output: list of events
+    """
+    response = {}
+    sql = f"SELECT event_title, location, date, descriptions, url from events WHERE event_id = (%s);"
+    g.cursor.execute(sql, [event])
+    fetched = g.cursor.fetchone()
+    response_msg_link = dict()
+    response_msg_link["name"] = fetched[0]
+    response_msg_link["location"] = fetched[1]
+    response_msg_link["date"] = fetched[2]
+    response_msg_link["descriptipns"] = fetched[3]
+    response_msg_link["bannerImageUrl"] = fetched[4]
+    response = {
+        'data': response_msg_link,
+        'error': None
+    }
+    status_code = 200
+    return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
+    
+@app.route('/api/check-volunteer/<event>', methods=['GET'])
+@authentication_required
+def check_volunteer(current_user, event):
+    """
+    Input: NIL
+    Output: If user volunteering for event
+    """
+    sql = f"SELECT * from volunteers WHERE event_id = (%s) and user_id = (%s) LIMIT 1;"
+    g.cursor.execute(sql, [event, current_user['user_id']])
+    fetched = g.cursor.fetchone()
+    response = {}
+    if fetched == None:
+        response = {
+            'data': False,
+            'error': None
+        }
+    else:
+        response = {
+            'data': True,
+            'error': None
+        }
+    status_code = 200
+    return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
+
+@app.route('/api/volunteer/<event>', methods=['POST'])
+@authentication_required
+def volunteer(current_user, event):
+    """
+    Input: NIL
+    Output: NIL
+    """
+    response = {}
+    sql = f"INSERT INTO volunteers(user_id, event_id) VALUES(%s,%s);"
+    g.cursor.execute(sql, [current_user['user_id'],event, ])
+    response = {
+            'data': "success",
+            'error': None
+        }
+    status_code = 200
+    return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
+
+
 @app.route('/api/events', methods=['GET'])
 @authentication_required
 def events(current_user):
@@ -207,7 +274,7 @@ def events(current_user):
     Output: list of events
     """
     response = {}
-    sql = f"SELECT event_id , location, date, descriptions, url from events;"
+    sql = f"SELECT event_title , location, date, descriptions, url from events;"
     g.cursor.execute(sql)
     data = g.cursor.fetchall()
     response_msg = list()
@@ -252,9 +319,13 @@ def get_score(current_user):
     Input: NIL
     Output: score
     """
-    # TODO: get the score from DB
+    sql = f"SELECT user_score FROM leaderboard WHERE user_id = (%s) LIMIT 1"
+
+    g.cursor.execute(sql, [current_user['user_id']])
+
+    fetched = g.cursor.fetchone()
     response = {
-        'data': "score",
+        'data': fetched[0],
         'error': None
     }
     status_code = 200
@@ -268,9 +339,18 @@ def add_score(current_user):
     Input: NIL
     Output: score
     """
-    # TODO: add the score to DB 
+    data = request.get_json()
+    s = data["score"]
+    sql = f"SELECT user_score FROM leaderboard WHERE user_id = (%s) LIMIT 1"
+    g.cursor.execute(sql, [current_user['user_id']])
+
+    fetched = g.cursor.fetchone()
+    score = fetched[0]
+    final_score = s + score
+    sql = f"UPDATE leaderboard SET user_score = (%s) WHERE user_id = (%s)"
+    g.cursor.execute(sql, [final_score, current_user['user_id']])
     response = {
-        'data': "score",
+        'data': "success",
         'error': None
     }
     status_code = 200
@@ -284,10 +364,20 @@ def leaderboard(current_user):
     Input: NIL
     Output: score
     """
-    # TODO: obtain all data from leaderboard
+    sql = f"SELECT u.fullName, l.user_score FROM leaderboard l, user u WHERE u.id = l.user_id;"
+    g.cursor.execute(sql)
+    data = g.cursor.fetchall()
+    response_msg = list()
+
+    for row in data:
+        response_msg_link = dict()
+        response_msg_link["name"] = row[0]
+        response_msg_link["score"] = row[1]
+
+        response_msg.append(response_msg_link)
     response = {
-        'data': "score",
-        'error': None
+        "data": response_msg,
+        "error": None
     }
     status_code = 200
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}

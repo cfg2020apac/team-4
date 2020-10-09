@@ -3,3 +3,5 @@ __pycache__
 storage
 
 .DS_Store
+
+*.jpg
