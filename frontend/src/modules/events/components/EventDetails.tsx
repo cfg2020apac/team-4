@@ -9,6 +9,12 @@ import SimpleForm, { FormMetadataType } from 'src/components/SimpleForm';
 import { EventDetails } from 'src/types/EventDetails';
 import { handleApiRequest } from 'src/utils/ui';
 import { createEvent } from '../operations';
+import { parse, isDate } from 'date-fns';
+
+function parseDateString(originalValue: string) {
+  const parsedDate = isDate(originalValue) ? originalValue : parse(originalValue, 'yyyy-MM-dd', new Date());
+  return parsedDate;
+}
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -31,7 +37,7 @@ const EventDetails: React.FC<Props> = ({ history }) => {
 
   const values: Partial<EventDetails> = {
     name: '',
-    date: new Date(),
+    date: '',
     address: '',
     descriptions: '',
     file_helper: '',
@@ -39,18 +45,18 @@ const EventDetails: React.FC<Props> = ({ history }) => {
   };
 
   const formMetadata: FormMetadataType<EventDetails> = {
-    // name: { label: 'Username', required: true, options: null, xs: 12, sm: 12 },
-    // password: { label: 'Password', required: true, options: null, xs: 12, sm: 12 }
     name: { label: 'Event Name', required: true, options: null, xs: 12, sm: 12 },
-    date: { label: 'Event Name', required: true, options: null, xs: 12, sm: 12 },
+    date: { label: 'Event date (YYYY-MM-DD)', required: true, options: null, xs: 12, sm: 12 },
     address: { label: 'Event Location', required: true, options: null, xs: 12, sm: 12 },
-    bannerImage: { label: 'Image Upload', required: true, options: null, xs: 12, sm: 12 },
     descriptions: { label: 'Event Description', required: true, multiline: true, options: null, xs: 12, sm: 12 }
   };
 
   const validationSchema = Yup.object({
-    name: Yup.string().required('Username is required'),
-    password: Yup.string().required('Password is required'),
+    name: Yup.string().required('Event Name is required'),
+    address: Yup.string(),
+    date: Yup.date()
+      .transform(parseDateString)
+      .max(new Date()),
     file_helper: Yup.string().required()
   });
 
@@ -62,7 +68,7 @@ const EventDetails: React.FC<Props> = ({ history }) => {
             <Typography variant='h4' color='inherit' style={{ height: 40 }}>
               Blossom World Society
             </Typography>
-            <Typography variant='h5'>Sign Up</Typography>
+            <Typography variant='h5'>Create Event</Typography>
           </Grid>
           <Grid item xs>
             <SimpleForm
