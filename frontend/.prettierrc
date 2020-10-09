@@ -1,9 +1,0 @@
-{
-  "arrowParens": "always",
-  "jsxSingleQuote": true,
-  "printWidth": 120,
-  "parser": "typescript",
-  "quoteProps": "preserve",
-  "semi": true,
-  "singleQuote": true
-}
