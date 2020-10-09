@@ -6,6 +6,7 @@ import HomeIndex from 'src/modules/home/components/HomeIndex';
 import * as session from 'src/modules/session';
 import UpdateUser from 'src/modules/session/components/UpdateUserPage';
 import Event from 'src/modules/events/components/EventDetails';
+import EventPage from 'src/modules/events/components/EventsPage';
 import AppMainLayout from './AppMainLayout';
 import ErrorBoundary from './ErrorBoundary';
 import Profile from 'src/modules/profile/components/Profile';
@@ -21,6 +22,7 @@ const AuthenticatedPages: React.FC<Props> = (props) => {
 
   const homeIndexRoute = <Route exact path='/' component={HomeIndex} />;
   const updateUserRoute = <Route exact path='/user' component={UpdateUser} />;
+  const viewEventsRoute = <Route exact path='/events' component={EventPage} />;
   const createEventRoute = <Route exact path='/events/new' component={Event} />;
   const createProfileRoute = <Route exact path='/profile' component={Profile} />;
   const createShopRoute = <Route exact path='/shop' component={Shop} />;
@@ -33,6 +35,7 @@ const AuthenticatedPages: React.FC<Props> = (props) => {
         <Switch>
           {homeIndexRoute}
           {updateUserRoute}
+          {viewEventsRoute}
           {createEventRoute}
           {createProfileRoute}
           {createShopRoute}
