@@ -52,13 +52,12 @@ const Shop: React.FC<Props> = () => {
     <>
       <Card className={classes.root}>
         <img
-          src={require('../../../assets/img/shop2.PNG')}
+          src={require('../../../assets/img/shop2.png')}
           style={{
             height: '600px',
             width: '300px'
           }}
         />
-        
       </Card>
     </>
   );
