@@ -216,7 +216,7 @@ CREATE TABLE `events` (
 )
 
 CREATE TABLE `volunteers` (
-`id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `volunteer_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `event_id` INT NOT NULL
 )
