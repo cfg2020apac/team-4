@@ -16,7 +16,7 @@ const UpdateUserPage: React.FC<Props> = ({ history }) => {
   const dispatch = useDispatch();
 
   const values: Partial<UserData> = {
-    name: user!.name!,
+    name: user && user.name ? user.name : 'no user',
     file_helper: ''
   };
 

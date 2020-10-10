@@ -23,8 +23,6 @@ const useStyles = makeStyles(() => ({
     left: '10%',
     paddingTop: '5%',
     paddingBottom: '5%',
-    width: '80%',
-    position: 'absolute',
     top: '18%'
   }
 }));

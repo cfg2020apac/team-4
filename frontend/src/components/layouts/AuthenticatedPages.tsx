@@ -10,6 +10,7 @@ import EventPage from 'src/modules/events/components/EventsPage';
 import AppMainLayout from './AppMainLayout';
 import ErrorBoundary from './ErrorBoundary';
 import Profile from 'src/modules/profile/components/Profile';
+import Leaderboard from 'src/modules/profile/components/Leaderboard';
 import Shop from 'src/modules/game/components/Shop';
 
 type Props = RouteComponentProps;
@@ -24,7 +25,8 @@ const AuthenticatedPages: React.FC<Props> = (props) => {
   const updateUserRoute = <Route exact path='/user' component={UpdateUser} />;
   const viewEventsRoute = <Route exact path='/events' component={EventPage} />;
   const createEventRoute = <Route exact path='/events/new' component={Event} />;
-  const createProfileRoute = <Route exact path='/profile' component={Profile} />;
+  const profileRoute = <Route exact path='/profile' component={Profile} />;
+  const leaderboardRoute = <Route exact path='/leaderboard' component={Leaderboard} />;
   const createShopRoute = <Route exact path='/shop' component={Shop} />;
   const catchAllRoute = <Route path='/' render={() => <div>404 Page Not Found</div>} />;
 
@@ -36,7 +38,8 @@ const AuthenticatedPages: React.FC<Props> = (props) => {
           {updateUserRoute}
           {viewEventsRoute}
           {createEventRoute}
-          {createProfileRoute}
+          {profileRoute}
+          {leaderboardRoute}
           {createShopRoute}
           {catchAllRoute}
         </Switch>

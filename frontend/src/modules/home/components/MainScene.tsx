@@ -24,6 +24,9 @@ export default class MainScene extends Scene {
     const bgArray = ['splash', 'splash2'];
     const bg = this.add.sprite(160, 500, 'splash');
 
+    // text
+    const text = this.add.text(70, 100, '2020 CIPoints\nLevel 3', { font: '24px', color: 'black', align: 'center' });
+
     // pets
     let petIdx = 0;
     const petArray = ['gratitude', 'joyous', 'kindness', 'service', 'sincerity'];
@@ -82,6 +85,15 @@ export default class MainScene extends Scene {
         loop: -1
       })
     );
+    const badgeObjectArray = badgeObjectArray1.concat(badgeObjectArray2);
+    badgeObjectArray.forEach((badge) => {
+      badge.setInteractive();
+      this.input.setDraggable(badge);
+    });
+    this.input.on('drag', (pointer: any, gameObject: any, dragX: any, dragY: any) => {
+      gameObject.x = dragX;
+      gameObject.y = dragY;
+    });
 
     // toggle
     const bgToggle = this.add.sprite(280, 40, 'wand');

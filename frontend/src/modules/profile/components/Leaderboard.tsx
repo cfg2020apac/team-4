@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { Box, Card, Grid, TextField, makeStyles, InputLabel, Button } from '@material-ui/core';
 
 import { BACKEND_URL } from 'src/constants';
@@ -31,10 +31,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Shop: React.FC<Props> = () => {
+const Profile: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const user = useSelector(session.selectors.getCurrentUser);
   const classes = useStyles();
+
+  const userName = 'John Doe';
+  const location = 'Singapore';
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -46,9 +49,9 @@ const Shop: React.FC<Props> = () => {
     <>
       <Card className={classes.root}>
         <img
-          src={require('../../../assets/img/shop2.png')}
+          src={require('../../../assets/img/leaderboard.png')}
           style={{
-            height: '600px',
+            height: '500px',
             width: '300px'
           }}
         />
@@ -57,4 +60,4 @@ const Shop: React.FC<Props> = () => {
   );
 };
 
-export default withRouter(Shop);
+export default withRouter(Profile);

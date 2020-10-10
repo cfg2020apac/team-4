@@ -7,13 +7,7 @@ import { Box, Card, Grid, TextField, makeStyles, InputLabel, Button } from '@mat
 import { BACKEND_URL } from 'src/constants';
 import * as session from 'src/modules/session';
 
-import UserProfile from 'react-user-profile';
-
 import { Drawer, useMediaQuery, useTheme } from '@material-ui/core';
-import clsx from 'clsx';
-
-import Sidebar from '../../../components/layouts/Sidebar';
-import Topbar from '../../../components/layouts/Topbar';
 
 type Props = RouteComponentProps;
 
@@ -62,13 +56,6 @@ const Profile: React.FC<Props> = () => {
             width: '170px'
           }}
         />
-        {/* <div style={{ margin: '0 auto', width: '100%' }}>
-          <UserProfile
-            // photo={photo}
-            userName={userName}
-            location={location}
-          />
-        </div> */}
         <br />
         <div>
           <b>JPMorggy</b>
@@ -79,31 +66,11 @@ const Profile: React.FC<Props> = () => {
         <div>Current Ranking: 1</div>
         <br />
         <div>Location: Beauty World</div>
-      </Card>
-      <br />
-      <Card className={classes.root}>
-        <img
-          src={require('../../../assets/img/pet.png')}
-          style={{
-            height: '500px',
-            width: '300px'
-          }}
-        />
         <Link to='/shop'>
           <Button variant='contained' color='primary'>
             Pet Shop
           </Button>
         </Link>
-      </Card>
-      <br />
-      <Card className={classes.root}>
-        <img
-          src={require('../../../assets/img/leaderboard.png')}
-          style={{
-            height: '500px',
-            width: '300px'
-          }}
-        />
       </Card>
     </>
   );

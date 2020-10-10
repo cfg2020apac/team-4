@@ -2,9 +2,10 @@ import { Divider, List, ListItem, ListItemIcon, ListItemText, Typography } from 
 import { makeStyles } from '@material-ui/core/styles';
 import Home from '@material-ui/icons/Home';
 import ListIcon from '@material-ui/icons/List';
-import AddIcon from '@material-ui/icons/Add';
 import Logout from '@material-ui/icons/ExitToApp';
 import User from '@material-ui/icons/SupervisedUserCircle';
+import Label from '@material-ui/icons/Label';
+import Leaderboard from '@material-ui/icons/Book';
 import clsx from 'clsx';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -142,10 +143,10 @@ const Sidebar: React.FC<Props> = (props) => {
 
       <List component='div' disablePadding>
         <SideButton url='/' text='Home' icon={<Home />} />
-        {/* <SideButton url='/user' text='Update Profile' icon={<User />} /> */}
-        <SideButton url='/profile' text='View Profile' icon={<User />} />
-        <SideButton url='/events' text='View Events' icon={<ListIcon />} />
-        <SideButton url='/events/new' text='Create Event' icon={<AddIcon />} />
+        <SideButton url='/user' text='Update Info' icon={<User />} />
+        <SideButton url='/profile' text='Profile' icon={<Label />} />
+        <SideButton url='/leaderboard' text='Leaderboard' icon={<Leaderboard />} />
+        <SideButton url='/events/new' text='Event' icon={<ListIcon />} />
         <Divider />
         <ListItem
           className={classes.listItem}
