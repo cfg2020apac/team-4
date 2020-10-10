@@ -138,8 +138,10 @@ def login():
 
         response = {
             'data': {
-                'id': fetched[0],
-                'name': fetched[1],
+                'user': {
+                    'id': fetched[0],
+                    'name': fetched[1],
+                },
                 'csrf_token': token.decode('UTF-8')
             },
             'code': 200,
