@@ -16,10 +16,10 @@ import Shop from 'src/modules/game/components/Shop';
 type Props = RouteComponentProps;
 
 const AuthenticatedPages: React.FC<Props> = (props) => {
-  // const loggedIn = useSelector(session.selectors.isLoggedIn);
-  // if (!loggedIn) {
-  //   return <Redirect to={{ pathname: '/login', state: { to: props.location } }} />;
-  // }
+  const loggedIn = useSelector(session.selectors.isLoggedIn);
+  if (!loggedIn) {
+    return <Redirect to={{ pathname: '/login', state: { to: props.location } }} />;
+  }
 
   const homeIndexRoute = <Route exact path='/' component={HomeIndex} />;
   const updateUserRoute = <Route exact path='/user' component={UpdateUser} />;

@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, NavLinkProps, RouteComponentProps, withRouter } from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
 
 import { operations } from 'src/modules/session';
 import { handleApiRequest } from 'src/utils/ui';
@@ -145,8 +146,8 @@ const Sidebar: React.FC<Props> = (props) => {
         <SideButton url='/' text='Home' icon={<Home />} />
         <SideButton url='/user' text='Update Profile' icon={<User />} />
         <SideButton url='/profile' text='View Profile' icon={<User />} />
-        <SideButton url='/events/new' text='Create Event' icon={<ListIcon />} />
-        <SideButton url='/events/new' text='Upcoming Events' icon={<ListIcon />} />
+        <SideButton url='/events' text='Upcoming Events' icon={<ListIcon />} />
+        <SideButton url='/events/new' text='Create Event' icon={<AddIcon />} />
         <SideButton url='/leaderboard' text='Leaderboard' icon={<Leaderboard />} />
         <SideButton url='/leaderboard' text='Applications' icon={<Label />} />
         <Divider />
