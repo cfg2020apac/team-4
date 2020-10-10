@@ -143,10 +143,12 @@ const Sidebar: React.FC<Props> = (props) => {
 
       <List component='div' disablePadding>
         <SideButton url='/' text='Home' icon={<Home />} />
-        <SideButton url='/user' text='Update Info' icon={<User />} />
-        <SideButton url='/profile' text='Profile' icon={<Label />} />
+        <SideButton url='/user' text='Update Profile' icon={<User />} />
+        <SideButton url='/profile' text='View Profile' icon={<User />} />
+        <SideButton url='/events/new' text='Create Event' icon={<ListIcon />} />
+        <SideButton url='/events/new' text='Upcoming Events' icon={<ListIcon />} />
         <SideButton url='/leaderboard' text='Leaderboard' icon={<Leaderboard />} />
-        <SideButton url='/events/new' text='Event' icon={<ListIcon />} />
+        <SideButton url='/leaderboard' text='Applications' icon={<Label />} />
         <Divider />
         <ListItem
           className={classes.listItem}
