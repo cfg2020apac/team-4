@@ -247,7 +247,9 @@ def event(event):
     response_msg_link["bannerImageUrl"] = fetched[4]
     response = {
         'data': response_msg_link,
-        'error': None
+        'code': 200,
+        'messages': [{"content": "test", "type": 4}]
+        # 'error': None
     }
     status_code = 200
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
@@ -314,12 +316,15 @@ def events():
         response_msg_link["name"] = row[0]
         response_msg_link["location"] = row[1]
         response_msg_link["date"] = row[2]
-        response_msg_link["descriptipns"] = row[3]
+        response_msg_link["descriptions"] = row[3]
         response_msg_link["bannerImageUrl"] = row[4]
         response_msg.append(response_msg_link)
+
     response = {
-        "data": response_msg,
-        "error": None
+        'data': response_msg,
+        'code': 200,
+        'messages': [{"content": "test", "type": 4}]
+        # 'error': None
     }
     status_code = 200
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
