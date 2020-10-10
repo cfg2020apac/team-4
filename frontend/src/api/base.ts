@@ -91,14 +91,14 @@ class BaseAPI {
           // so binary data can be sent successfully to the backend.
           'Content-Type': undefined,
           'Accept': 'application/json',
-          'X-CSRF-Token': BaseAPI.csrfToken
+          'x-access-token': BaseAPI.csrfToken
         }
       };
     }
     return {
       headers: {
         'Accept': 'application/json',
-        'X-CSRF-Token': BaseAPI.csrfToken
+        'x-access-token': BaseAPI.csrfToken
       }
     };
   }

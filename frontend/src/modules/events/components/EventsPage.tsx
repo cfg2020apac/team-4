@@ -41,7 +41,7 @@ const EventsPage: React.FC<Props> = ({ history }) => {
       setEvents(apiResponse.data);
     };
     fetchEvents();
-  });
+  }, []);
 
   return (
     <Grid container direction='column' justify='center' spacing={3}>

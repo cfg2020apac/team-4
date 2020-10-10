@@ -27,13 +27,13 @@ export default function EventCard(props: EventDetails) {
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <CardMedia component='img' alt={props.name} height='140' image={props.bannerImage} title={props.name} />
+        <CardMedia component='img' alt={props.name} height='140' image={props.bannerImageUrl} title={props.name} />
         <CardContent>
           <Typography gutterBottom variant='h5' component='h2'>
             {props.name}
           </Typography>
           <Typography gutterBottom variant='h5' component='h2'>
-            {props.address}
+            {props.location}
           </Typography>
           <Typography gutterBottom variant='h5' component='h2'>
             {props.date}

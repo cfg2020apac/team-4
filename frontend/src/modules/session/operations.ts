@@ -23,8 +23,8 @@ export function signOut(): Operation<ApiResponse<{}>> {
   return async (dispatch) => {
     const response = await api.users.signOut();
     dispatch(actions.setCurrentUser(null));
-    localStorage.removeItem('username');
-    localStorage.removeItem('profile');
+    // localStorage.removeItem('username');
+    // localStorage.removeItem('profile');
     return response;
   };
 }

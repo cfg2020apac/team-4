@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Button, Card, CardContent, Grid, Link, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import SimpleForm, { FormMetadataType } from 'src/components/SimpleForm';
+import SimpleForm, { FormMetadataType } from 'src/components/SimpleFormWithUpload';
 import { EventDetails } from 'src/types/EventDetails';
 import { handleApiRequest } from 'src/utils/ui';
 import { createEvent } from '../operations';
@@ -36,7 +36,7 @@ const EventDetails: React.FC<Props> = ({ history }) => {
   const values: Partial<EventDetails> = {
     name: '',
     date: '',
-    address: '',
+    location: '',
     descriptions: '',
     file_helper: '',
     file: ''
@@ -45,13 +45,13 @@ const EventDetails: React.FC<Props> = ({ history }) => {
   const formMetadata: FormMetadataType<EventDetails> = {
     name: { label: 'Event Name', required: true, options: null, xs: 12, sm: 12 },
     date: { label: 'Event date (YYYY-MM-DD)', required: true, options: null, xs: 12, sm: 12 },
-    address: { label: 'Event Location', required: true, options: null, xs: 12, sm: 12 },
+    location: { label: 'Event Location', required: true, options: null, xs: 12, sm: 12 },
     descriptions: { label: 'Event Description', required: true, multiline: true, options: null, xs: 12, sm: 12 }
   };
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Event Name is required'),
-    address: Yup.string(),
+    location: Yup.string(),
     date: Yup.date()
       .transform(parseDateString)
       .max(new Date()),
