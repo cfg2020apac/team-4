@@ -191,8 +191,8 @@ index = 1
 
 
 @app.route('/api/new-event', methods=['POST'])
-@authentication_required
-def resources(current_user):
+# @authentication_required
+def resources():
     """
     Input: form data for new event
     Output: NIL
@@ -205,7 +205,7 @@ def resources(current_user):
     descriptions = request.form.get('descriptions')
     sql = f"INSERT INTO events(event_title, location, date, descriptions, url) VALUES(%s,%s,%s,%s,%s);"
     g.cursor.execute(sql, [name, location, date, descriptions,
-                           "localhost:5000/get-event-banner/" + str(index) + "_" + uploaded_file.filename])
+                           "http://localhost:5000/api/get-event-banner/" + str(index) + "_" + uploaded_file.filename])
     if uploaded_file.filename != '':
         uploaded_file.save("./s3/events/" + str(index) +
                            "_" + uploaded_file.filename)
@@ -219,8 +219,8 @@ def resources(current_user):
 
 
 @app.route('/api/get-event-banner/<path>', methods=['GET'])
-@authentication_required
-def get_event_banner(current_user, path):
+# @authentication_required
+def get_event_banner(path):
     """
     Input: NIL
     Output: url of pic from s3
