@@ -5,25 +5,36 @@ import jwt
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__, static_url_path='')
 # The absolute path of the directory containing images for users to download
 app.config.from_json('config.json')
 
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+
+@cross_origin()
+@app.route("/")
+def helloWorld():
+    return "Hello, cross-origin-world!"
+
+
 @app.before_request
 def connect_to_db():
     """
     Connects to the database server if a connection is not found. 
     Executes before every request is processed.
-    
+
     autocommit set to True. Revert to False if Transactions required.
     """
     if not hasattr(g, 'db_connection'):
         g.db_connection = mysql.connector.connect(**app.config['DATABASE'])
         g.cursor = g.db_connection.cursor()
         g.db_connection.autocommit = True
-        
+
 
 @app.teardown_appcontext
 def close_db(error):
@@ -37,6 +48,7 @@ def close_db(error):
         db.close()
     if cursor is not None:
         cursor.close()
+
 
 def authentication_required(f):
     """ Decorator function to execute authentication checks """
@@ -56,16 +68,18 @@ def authentication_required(f):
             current_user = {
                 "user_id": data['id'],
                 "username": data['username']
-                }
+            }
         except:
             return 'Invalid token', 401
 
-        return f(current_user, *args, **kwargs)   
+        return f(current_user, *args, **kwargs)
     return auth_checks
+
 
 @app.route('/', methods=['GET'])
 def hello_world():
     return "hello world"
+
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -89,12 +103,13 @@ def signup():
 
     g.cursor.execute(sql, [username])
     fetched = g.cursor.fetchone()
-  
-    response = {'id': fetched[0] }
+
+    response = {'id': fetched[0]}
 
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
 
 
+@cross_origin()
 @app.route('/login', methods=['POST'])
 def login():
     """
@@ -114,25 +129,32 @@ def login():
     status_code = 200
     if fetched == None:
         status_code = 404
-        response = {'error': "Invalid username or password" }
+        response = {'error': "Invalid username or password"}
 
     elif check_password_hash(fetched[2], pw):
-        
-        token = jwt.encode({'id' : fetched[0], 'username': fetched[1], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+
+        token = jwt.encode({'id': fetched[0], 'username': fetched[1], 'exp': datetime.datetime.utcnow(
+        ) + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
 
         response = {
-            'id': fetched[0],
-            'username': fetched[1],
-            'token': token.decode('UTF-8')
-            }
+            'data': {
+                'id': fetched[0],
+                'name': fetched[1],
+                'csrf_token': token.decode('UTF-8')
+            },
+            'code': 200,
+            'messages': [{"content": "test", "type": 4}]
+        }
 
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
+
 
 @app.route('/logout')
 @authentication_required
 def logout(current_user):
     # remove the username from the session if it's there
-    response = {'id' : current_user['user_id'], 'message': 'Successfully logged out'}
+    response = {'id': current_user['user_id'],
+                'message': 'Successfully logged out'}
     status_code = 200
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
 
@@ -152,7 +174,7 @@ def announcements(current_user):
     for row in data:
         response_msg_link = dict()
         response_msg_link["title"] = row[0]
-        response_msg_link["content" ] = row[1]
+        response_msg_link["content"] = row[1]
 
         response_msg.append(response_msg_link)
     response = {
@@ -162,7 +184,10 @@ def announcements(current_user):
     status_code = 200
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
 
+
 index = 1
+
+
 @app.route('/api/new-event', methods=['POST'])
 @authentication_required
 def resources(current_user):
@@ -177,9 +202,11 @@ def resources(current_user):
     date = request.form.get('date')
     descriptions = request.form.get('descriptions')
     sql = f"INSERT INTO events(event_title, location, date, descriptions, url) VALUES(%s,%s,%s,%s,%s);"
-    g.cursor.execute(sql, [name, location, date, descriptions, "localhost:5000/get-event-banner/" + str(index) + "_" + uploaded_file.filename])
+    g.cursor.execute(sql, [name, location, date, descriptions,
+                           "localhost:5000/get-event-banner/" + str(index) + "_" + uploaded_file.filename])
     if uploaded_file.filename != '':
-            uploaded_file.save("./s3/events/" + str(index)+ "_" +uploaded_file.filename)
+        uploaded_file.save("./s3/events/" + str(index) +
+                           "_" + uploaded_file.filename)
     response = {
         'data': "sucess",
         'error': None
@@ -197,7 +224,6 @@ def get_event_banner(current_user, path):
     Output: url of pic from s3
     """
     return send_from_directory('s3/events', path)
-
 
 
 @app.route('/api/event/<event>', methods=['GET'])
@@ -223,7 +249,8 @@ def event(current_user, event):
     }
     status_code = 200
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
-    
+
+
 @app.route('/api/check-volunteer/<event>', methods=['GET'])
 @authentication_required
 def check_volunteer(current_user, event):
@@ -248,6 +275,7 @@ def check_volunteer(current_user, event):
     status_code = 200
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
 
+
 @app.route('/api/volunteer/<event>', methods=['POST'])
 @authentication_required
 def volunteer(current_user, event):
@@ -257,11 +285,11 @@ def volunteer(current_user, event):
     """
     response = {}
     sql = f"INSERT INTO volunteers(user_id, event_id) VALUES(%s,%s);"
-    g.cursor.execute(sql, [current_user['user_id'],event, ])
+    g.cursor.execute(sql, [current_user['user_id'], event, ])
     response = {
-            'data': "success",
-            'error': None
-        }
+        'data': "success",
+        'error': None
+    }
     status_code = 200
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
 
@@ -381,5 +409,3 @@ def leaderboard(current_user):
     }
     status_code = 200
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
-
-
