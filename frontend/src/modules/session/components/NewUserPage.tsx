@@ -62,7 +62,7 @@ const NewUserPage: React.FC<Props> = ({ history }) => {
       xs: 12,
       sm: 12
     },
-    race: { label: 'Race', required: true, options: null, xs: 12, sm: 12},
+    race: { label: 'Race', required: true, options: null, xs: 12, sm: 12 },
     nationality: { label: 'Nationality', required: true, options: null, xs: 12, sm: 12 },
     address_streetname: { label: 'Street Name', required: true, options: null, xs: 12, sm: 12 },
     address_postal_code: { label: 'Postal Code', required: true, options: null, xs: 12, sm: 12 },

@@ -5,11 +5,14 @@ import jwt
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
+from flask_cors import CORS
 
 
 app = Flask(__name__, static_url_path='')
 # The absolute path of the directory containing images for users to download
 app.config.from_json('config.json')
+
+CORS(app)
 
 
 @app.before_request
@@ -94,7 +97,11 @@ def signup():
     g.cursor.execute(sql, [username])
     fetched = g.cursor.fetchone()
 
-    response = {'id': fetched[0]}
+    response = {
+        'data': {
+            'id': fetched[0]
+        }
+    }
 
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
 
@@ -126,9 +133,14 @@ def login():
         ) + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
 
         response = {
-            'id': fetched[0],
-            'username': fetched[1],
-            'token': token.decode('UTF-8')
+            'data': {
+                'user': {
+                    'id': fetched[0],
+                    'username': fetched[1],
+                },
+                'token': token.decode('UTF-8')
+            },
+            'messages': None
         }
 
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
@@ -212,8 +224,8 @@ def get_event_banner(current_user, path):
 
 
 @app.route('/api/event/<event>', methods=['GET'])
-@authentication_required
-def event(current_user, event):
+# @authentication_required
+def event(event):
     """
     Input: NIL
     Output: list of events

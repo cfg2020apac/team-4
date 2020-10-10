@@ -3,7 +3,7 @@ import * as types from './types';
 
 const initialState: types.SessionState = {
   user: localStorage.getItem('username')
-  ? {
+    ? {
         name: localStorage.getItem('username'),
         profile: localStorage.getItem('profile'),
         fullname: localStorage.getItem('fullname'),
@@ -18,7 +18,7 @@ const initialState: types.SessionState = {
         written_languages: localStorage.getItem('written_languages'),
         interests: localStorage.getItem('interests'),
         help: localStorage.getItem('help'),
-        current_occupation: localStorage.getItem('current_occupation'),
+        current_occupation: localStorage.getItem('current_occupation')
       }
     : null
 };

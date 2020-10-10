@@ -28,7 +28,6 @@ const AuthenticatedPages: React.FC<Props> = (props) => {
   const createShopRoute = <Route exact path='/shop' component={Shop} />;
   const catchAllRoute = <Route path='/' render={() => <div>404 Page Not Found</div>} />;
 
-
   return (
     <AppMainLayout>
       <ErrorBoundary style={{}}>

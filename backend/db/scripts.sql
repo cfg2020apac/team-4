@@ -204,3 +204,19 @@ ALTER TABLE `learning`
 --
 ALTER TABLE `volunteering`
   MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+
+CREATE TABLE `events` (
+  `event_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `event_title` varchar(300) NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `date` varchar(255) NOT NULL,
+  `descriptions` TEXT NOT NULL,
+  `url` varchar(255) NOT NULL
+)
+
+CREATE TABLE `volunteers` (
+  `volunteer_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `event_id` INT NOT NULL
+)

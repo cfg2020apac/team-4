@@ -6,6 +6,7 @@ import { Box, Card, Grid, TextField, makeStyles } from '@material-ui/core';
 
 import { BACKEND_URL } from 'src/constants';
 import * as session from 'src/modules/session';
+import Game from './Game';
 
 type Props = RouteComponentProps;
 
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: `40px 40px 40px 40px`
+    padding: `0px 0px 0px 0px`
   },
   buttons: {
     height: '100%',
@@ -35,25 +36,7 @@ const HomeIndex: React.FC<Props> = () => {
 
   return (
     <Card className={classes.root}>
-      {/* <Grid container spacing={0}>
-        <Grid item xs={5}>
-          <TextField
-            id='username'
-            label='Username'
-            defaultValue={user ? user.name : 'user undefined'}
-            InputProps={{
-              readOnly: true
-            }}
-          />
-        </Grid>
-      </Grid> */}
-      <img
-          src={require('../../../assets/img/Application_List.PNG')}
-          style={{
-            height: '600px',
-            width: '300px'
-          }}
-        />
+      <Game />
     </Card>
   );
 };
