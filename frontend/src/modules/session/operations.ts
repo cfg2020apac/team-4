@@ -6,12 +6,15 @@ import * as actions from './actions';
 export function signIn(username: string, password: string): Operation<ApiResponse<UserData>> {
   return async (dispatch) => {
     const response = await api.users.signIn(username, password);
+    console.log(response);
+
     const user = response.data.user;
+
     if (user.name) {
       dispatch(actions.setCurrentUser(user));
     }
-    localStorage.setItem('username', user.name!);
-    localStorage.setItem('profile', user.profile!);
+    // localStorage.setItem('username', user.use!);
+    // localStorage.setItem('profile', user.profile!);
     return { ...response, data: user };
   };
 }

@@ -42,6 +42,8 @@ const SignInPage: React.FC<Props> = (props) => {
         props.history.push('/');
       })
       .catch((response: ApiResponse<{}>) => {
+        console.log('hereeeeee');
+        console.log(response);
         if (response.messages.length > 0) {
           showErrorMessage(response.messages[0].content);
         }

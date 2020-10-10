@@ -5,14 +5,21 @@ import jwt
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__, static_url_path='')
 # The absolute path of the directory containing images for users to download
 app.config.from_json('config.json')
 
-CORS(app)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
+
+@cross_origin()
+@app.route("/")
+def helloWorld():
+    return "Hello, cross-origin-world!"
 
 
 @app.before_request
@@ -97,15 +104,12 @@ def signup():
     g.cursor.execute(sql, [username])
     fetched = g.cursor.fetchone()
 
-    response = {
-        'data': {
-            'id': fetched[0]
-        }
-    }
+    response = {'id': fetched[0]}
 
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
 
 
+@cross_origin()
 @app.route('/login', methods=['POST'])
 def login():
     """
@@ -136,11 +140,12 @@ def login():
             'data': {
                 'user': {
                     'id': fetched[0],
-                    'username': fetched[1],
+                    'name': fetched[1],
                 },
-                'token': token.decode('UTF-8')
+                'csrf_token': token.decode('UTF-8')
             },
-            'messages': None
+            'code': 200,
+            'messages': [{"content": "test", "type": 4}]
         }
 
     return json.dumps(response), status_code, {'Content-Type': 'json; charset=utf-8'}
